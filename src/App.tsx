@@ -2,6 +2,9 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ChatMessage } from "./hooks/useConsumer";
 import useWebSocket from "./hooks/useWebSocket";
+import ResponseContent from "./ResponseContent"; // i have created this Response component because the former layout was not allowing the response message to display with the format i wanted as per my prompt
+import logo from "../src/logo.png"; // i was not able to import the logo from the public folder directly so i have added it here in the src
+
 
 function App() {
   const { sessionId, chatHistory, sendTextMessage } = useWebSocket();
@@ -15,6 +18,7 @@ function App() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <img src={logo} alt="TeamMate Logo" className="mb-5 w-32 h-32" /> {/* Then i was able to call it here */}
       <h1 className="mb-5 text-2xl font-bold">TeamMate</h1>
       <ChatWindow chatHistory={chatHistory} />
       <MessageInput
@@ -39,13 +43,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ chatHistory }) => {
         <div
           key={message.id}
           className={`mb-4 p-3 rounded-lg ${
-            message.isUserMessage
-              ? "bg-green-100 self-end"
-              : "bg-red-100 self-start"
+            message.isUserMessage ? "bg-green-100 self-end" : "bg-red-100 self-start"
           }`}
         >
-          <div className="mb-2">{message.message}</div>
-          {/* <div className="text-xs text-gray-500">{message.timestamp}</div> */}
+          <ResponseContent content={message.message} />
         </div>
       ))}
     </div>
