@@ -4,7 +4,7 @@ import { ChatMessage } from "./hooks/useConsumer";
 import useWebSocket from "./hooks/useWebSocket";
 import ResponseContent from "./ResponseContent"; // i have created this Response component because the former layout was not allowing the response message to display with the format i wanted as per my prompt
 import logo from "../src/logo.png"; // i was not able to import the logo from the public folder directly so i have added it here in the src
-
+import FileUpload from './FileUpload';
 
 function App() {
   const { sessionId, chatHistory, sendTextMessage } = useWebSocket();
@@ -20,6 +20,7 @@ function App() {
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <img src={logo} alt="TeamMate Logo" className="mb-5 w-32 h-32" /> {/* Then i was able to call it here */}
       <h1 className="mb-5 text-2xl font-bold">TeamMate</h1>
+      <FileUpload sessionId={sessionId} /> {/* Including the FileUpload component */}
       <ChatWindow chatHistory={chatHistory} />
       <MessageInput
         currentMessage={currentMessage}
